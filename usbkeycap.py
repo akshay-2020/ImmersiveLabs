@@ -19,9 +19,16 @@ def main():
         print "[!] You need to privide a USB Device Address"
         sys.exit()
         
-    tshark_output = commands.getoutput('tshark -r USB_PCAP.pcapng -T fields -e _ws.col.left')
+    #tshark_output = commands.getoutput('tshark -r USB_PCAP.pcapng -T fields -e _ws.col.left')
+    # f1 = open("t_shark.txt")
 
-   
+    # #t_shark_list = []
+
+    # for line in f1:
+    #     line = line.split(',')
+    #     t_shark_list.append(line)
+   #print t_shark_list
+
 
 
     # 
@@ -43,21 +50,24 @@ def main():
     #print lang_file
 
     for line in f:
-        (key, val) = line.split(':')
-        d[str(key)] = val
-        print d
-
-
+        line = line.strip('\n')
+        (key, val1,val2,val3) = line.split(':')
+        d[str(key)] = val1,val2,val3
+    #print d
 
     # Format tshark output
-    for line in tshark_output.split('\n'):
+
+    f1 = open("t_shark.txt")
+
+    for line in f1:
+        #print line
         try:
-            key_codes = line.split(':')
+            key_codes = line = line.split(',')
             print key_codes
         except:
             key_codes = False
 
-        print key_codes
+        #print key_codes
             
             
         # Create compatible keymap
@@ -68,15 +78,19 @@ def main():
             
             keymap = ''
             keymap += key_codes[0]
-            keymap += ','
+            #keymap += ','
             keymap += key_codes[1]
-            keymap += ','
+            #keymap += ','
             keymap += key_codes[2]
-            
+
+
+
             keymap_char = ''
-            for key, value in lang_file.iteritems():
-                
-                if keymap == value:
+            for key, value in d.iteritems():
+
+                new_val = value[0] + value[1] + value[2]
+
+                if keymap == new_val:
                     keymap_char = key
                     if key == 'SPACE':
                         keymap_char = ' '
