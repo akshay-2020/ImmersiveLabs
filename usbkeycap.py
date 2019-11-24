@@ -62,7 +62,7 @@ def main():
     for line in f1:
         #print line
         try:
-            key_codes = line = line.split(',')
+            key_codes = line.split(',')
             print key_codes
         except:
             key_codes = False
@@ -71,43 +71,54 @@ def main():
             
             
         # Create compatible keymap
-        if key_codes and len(key_codes) > 3 and key_codes[3] == '00':
+        x = 0
+        keymap_char = []
+
+        while x < len(key_codes):
+                
+            if key_codes[x][0] == '2' and key_codes[x][1] == '0':
+                key_codes[x][0] = '0'
+                key_codes[x][1] == '2'
             
-            if key_codes[0] == '20':
-                key_codes[0] = '02'
-            
-            keymap = ''
-            keymap += key_codes[0]
-            #keymap += ','
-            keymap += key_codes[1]
-            #keymap += ','
-            keymap += key_codes[2]
+            keymap = key_codes[x]
+
+            print keymap
+            """
+            keymap += key_codes[x][0]
+            keymap += key_codes[x][1]
+            keymap += key_codes[x][2]
+            keymap += key_codes[x][3]
+            keymap += key_codes[x][4]
+            keymap += key_codes[x][5]
+            """
 
 
-
-            keymap_char = ''
             for key, value in d.iteritems():
 
                 new_val = value[0] + value[1] + value[2]
 
                 if keymap == new_val:
-                    keymap_char = key
-                    if key == 'SPACE':
-                        keymap_char = ' '
-                    elif key == 'ENTER':
-                        keymap_char = '\n'
-                    elif key == 'SHIFT':
-                        keymap_char = ''
+                    keymap_char.append(key)
+                    new_val = None
+
+                    #if key == 'SPACE':
+                        #keymap_char.append(' ')
+                   # elif key == 'ENTER':
+                       # keymap_char.append('\n')
+                    #elif key == 'SHIFT':
+                      #  pass
                         
-                    
-            if keymap_char:        
-                out_file += keymap_char
-            else:
-                print "Unmapped Key Found: ", key_codes
-    
-    print "Captured KeyStrokes\n"
-    print out_file
-    print "End Captured Session"
+
+            #if keymap_char:        
+                #out_file += keymap_char
+            #else:
+                #print "Unmapped Key Found: ", key_codes
+
+            x +=1
+
+        print "Captured KeyStrokes\n"
+        print keymap_char
+        print "End Captured Session"
 
 
 
